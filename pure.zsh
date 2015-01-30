@@ -95,6 +95,24 @@ prompt_pure_precmd() {
   unset cmd_timestamp
 }
 
+function zle-line-init zle-keymap-select {
+  zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+function vi_mode_prompt_info() {
+  local keymap=$KEYMAP
+  case "$keymap" in
+    'vicmd')
+      echo "%F{green}NORMAL%f"
+      ;;
+    *)
+      # vi mode may be 'viins'
+      echo "%F{cyan}INSERT%f"
+  esac
+}
 
 prompt_pure_setup() {
   # prevent percentage showing up
@@ -121,7 +139,7 @@ prompt_pure_setup() {
   [[ $UID -eq 0 ]] && prompt_pure_username='%F{white}%n%F{242}@%m '
 
   # prompt turns red if the previous command didn't exit with 0
-  PROMPT="%(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
+  PROMPT="%F{green}`vi_mode_prompt_info`%f %(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
 }
 
 prompt_pure_setup "$@"
