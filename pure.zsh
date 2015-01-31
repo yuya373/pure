@@ -96,6 +96,7 @@ prompt_pure_precmd() {
 }
 
 function zle-line-init zle-keymap-select {
+  set_prompt "$@"
   zle reset-prompt
 }
 
@@ -112,6 +113,10 @@ function vi_mode_prompt_info() {
       # vi mode may be 'viins'
       echo "%F{cyan}INSERT%f"
   esac
+}
+
+function set_prompt() {
+  PROMPT="$(vi_mode_prompt_info) %(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
 }
 
 prompt_pure_setup() {
@@ -139,7 +144,7 @@ prompt_pure_setup() {
   [[ $UID -eq 0 ]] && prompt_pure_username='%F{white}%n%F{242}@%m '
 
   # prompt turns red if the previous command didn't exit with 0
-  PROMPT="%F{green}`vi_mode_prompt_info`%f %(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
+  # PROMPT="$(vi_mode_prompt_info) %(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
 }
 
 prompt_pure_setup "$@"
