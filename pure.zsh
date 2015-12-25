@@ -307,7 +307,7 @@ prompt_pure_async_callback() {
 }
 
 function zle-line-init zle-keymap-select {
-  set_prompt "$@"
+  PROMPT="$(vi_mode_prompt_info) %(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
   zle reset-prompt
 }
 
@@ -366,7 +366,6 @@ prompt_pure_setup() {
 
   # prompt turns red if the previous command didn't exit with 0
   # PROMPT="$(vi_mode_prompt_info) %(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
-  PROMPT="$(vi_mode_prompt_info) %(?.%F{magenta}.%F{red})${PURE_PROMPT_SYMBOL:-❯}%f "
 }
 
 
