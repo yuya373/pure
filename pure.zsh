@@ -317,12 +317,15 @@ zle -N zle-keymap-select
 function vi_mode_prompt_info() {
   local keymap=$KEYMAP
   case "$keymap" in
-    'vicmd')
-      echo "%F{green}NORMAL%f"
-      ;;
-    *)
-      # vi mode may be 'viins'
-      echo "%F{cyan}INSERT%f"
+      'vicmd')
+          echo "%F{green}NORMAL%f"
+          ;;
+      'vivis'|'vivli')
+          echo "%F{yellow}VISUAL"
+          ;;
+      *)
+          # vi mode may be 'viins'
+          echo "%F{cyan}INSERT%f"
   esac
 }
 
